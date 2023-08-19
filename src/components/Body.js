@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import RestaurantCard from "./RestaurantCard";
 
 import { useEffect, useState } from "react";
@@ -16,9 +17,8 @@ const Body = () => {
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.1902827&lng=72.9711542&page_type=DESKTOP_WEB_LISTING"
     );
     const res = await data.json();
-    console.log(res);
-    setListResData(res?.data?.cards[2]?.data?.data?.cards);
-    setFilteredListResData(res?.data?.cards[2]?.data?.data?.cards);
+    setListResData(res?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    setFilteredListResData(res?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
   };
   return (
     <div className="body">
@@ -49,7 +49,7 @@ const Body = () => {
       </div>
       <div className="res-container">
         {filteredListResData.map((restaurant) => (
-          <RestaurantCard key={restaurant.id} resData={restaurant} />
+          <Link key={restaurant.info.id} to={"/restaurant/" + restaurant.info.id}><RestaurantCard resData={restaurant.info} /></Link>
         ))}
       </div>
     </div>
